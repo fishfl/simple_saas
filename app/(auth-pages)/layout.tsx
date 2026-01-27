@@ -1,5 +1,4 @@
 import { Logo } from "@/components/logo";
-import Link from "next/link";
 
 export default function AuthLayout({
   children,

@@ -291,11 +291,6 @@ export default function PrivacyPage() {
               please don't hesitate to contact us. We're here to help and ensure your privacy is protected.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild variant="outline">
-                <Link href="/contact">
-                  Contact Us
-                </Link>
-              </Button>
               <Button asChild>
                 <Link href="/">
                   Back to Home

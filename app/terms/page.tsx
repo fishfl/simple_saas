@@ -324,11 +324,6 @@ export default function TermsPage() {
               please contact us. We're here to help ensure you understand and can comply with these terms.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild variant="outline">
-                <Link href="/contact">
-                  Contact Support
-                </Link>
-              </Button>
               <Button asChild>
                 <Link href="/">
                   Start Using Service

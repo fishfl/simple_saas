@@ -2,7 +2,6 @@ import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import { SubscriptionStatusCard } from "@/components/dashboard/subscription-status-card";
 import { CreditsBalanceCard } from "@/components/dashboard/credits-balance-card";
-import { QuickActionsCard } from "@/components/dashboard/quick-actions-card";
 
 export default async function DashboardPage() {
   const supabase = await createClient();
@@ -61,18 +60,12 @@ export default async function DashboardPage() {
         
         {/* Subscription Status */}
         <SubscriptionStatusCard subscription={subscription} />
-        
-        {/* Quick Actions */}
-        <QuickActionsCard />
+
       </div>
 
       {/* Placeholder for New Business Logic */}
       <div className="border border-dashed rounded-lg p-10 flex flex-col items-center justify-center text-center text-muted-foreground bg-muted/20">
-        <h3 className="text-lg font-semibold mb-2">My Projects</h3>
-        <p>You haven't created any projects yet. Start by creating your first one!</p>
-        <button className="mt-4 px-4 py-2 bg-primary text-primary-foreground rounded-md text-sm font-medium">
-          Create New Project
-        </button>
+
       </div>
     </div>
   );

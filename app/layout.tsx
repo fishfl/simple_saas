@@ -1,6 +1,5 @@
 import Header from "@/components/header";
 import { Footer } from "@/components/footer";
-import { Geist } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import { createClient } from "@/utils/supabase/server";
 import { Toaster } from "@/components/ui/toaster";
@@ -28,11 +27,6 @@ export const metadata = {
   },
 };
 
-const geistSans = Geist({
-  display: "swap",
-  subsets: ["latin"],
-});
-
 export default async function RootLayout({
   children,
 }: Readonly<{
@@ -44,7 +38,7 @@ export default async function RootLayout({
   } = await supabase.auth.getUser();
 
   return (
-    <html lang="en" className={geistSans.className} suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <body className="bg-background text-foreground">
         <ThemeProvider
           attribute="class"
