@@ -2,7 +2,6 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   devIndicators: {
-    appIsrStatus: false,
   },
   turbopack: {
     // 默认开启 Turbopack，添加空配置以消除与 webpack 配置共存时的警告
