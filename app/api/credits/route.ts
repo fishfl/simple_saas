@@ -31,70 +31,15 @@ export async function GET() {
       .eq('user_id', user.id)
       .single();
 
-    if (error && error.code !== 'PGRST116') { // PGRST116 = no rows returned
+    if (error) {
+      // 如果是 PGRST116 (无数据)，说明触发器未触发或为历史数据
+      // 在生产环境中，这可能需要记录日志或联系管理员
+      // 但在此处，我们只需处理错误即可，因为 DB 触发器应该保证数据存在
       console.error('Error fetching customer data:', error);
       return NextResponse.json(
         { error: 'Failed to fetch customer data' },
         { status: 500 }
       );
-    }
-
-    // 如果用户没有customer记录，创建一个默认记录
-    if (!customer) {
-      const { data: newCustomer, error: createError } = await supabase
-        .from('customers')
-        .insert({
-          user_id: user.id,
-          email: user.email || 'unknown@example.com',
-          credits: 3, // 新用户赠送3积分
-          creem_customer_id: `new_user_${user.id}`,
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-          metadata: {
-            source: 'chinese_name_generator',
-            initial_credits: 3
-          }
-        })
-        .select(`
-          *,
-          credits_history (
-            amount,
-            type,
-            created_at,
-            description
-          )
-        `)
-        .single();
-
-      if (createError) {
-        console.error('Error creating customer record:', createError);
-        return NextResponse.json(
-          { error: 'Failed to create customer record' },
-          { status: 500 }
-        );
-      }
-
-      // 记录初始积分赠送
-      await supabase
-        .from('credits_history')
-        .insert({
-          customer_id: newCustomer.id,
-          amount: 3,
-          type: 'add',
-          description: 'Welcome bonus for new user',
-          metadata: { source: 'welcome_bonus' }
-        });
-
-      return NextResponse.json({ 
-        credits: {
-          id: newCustomer.id,
-          user_id: newCustomer.user_id,
-          total_credits: newCustomer.credits,
-          remaining_credits: newCustomer.credits,
-          created_at: newCustomer.created_at,
-          updated_at: newCustomer.updated_at
-        }
-      });
     }
 
     // 返回兼容的格式

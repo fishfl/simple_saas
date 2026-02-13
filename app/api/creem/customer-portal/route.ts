@@ -29,6 +29,12 @@ export async function GET(request: Request) {
       return new NextResponse("No subscription found", { status: 404 });
     }
 
+    // Check if the customer ID is a valid Creem ID (should start with 'cust_')
+    // The 'auto_' IDs are local placeholders for new users and don't exist in Creem
+    if (!customer.creem_customer_id || !customer.creem_customer_id.startsWith('cust_')) {
+      return new NextResponse("Not a paid customer yet", { status: 404 });
+    }
+
     // Call Creem API to get the customer portal link
     const response = await fetch(
       `${process.env.CREEM_API_URL}/customers/billing`,

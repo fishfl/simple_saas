@@ -34,7 +34,9 @@ export function SubscriptionPortalDialog() {
           .eq("user_id", user.id)
           .single();
 
-        setHasCustomer(!!customer?.creem_customer_id);
+        // Only show portal if they have a real Creem ID (starts with cust_)
+        // Users with 'auto_' IDs are free users who haven't purchased yet
+        setHasCustomer(!!customer?.creem_customer_id?.startsWith('cust_'));
       } catch (err) {
         console.error("Error checking customer:", err);
         setHasCustomer(false);

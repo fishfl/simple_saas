@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Zap, Shield, Globe, CheckCircle2 } from "lucide-react";
+import { PricingSection } from "@/components/pricing-section";
 
 export default function Home() {
   return (
@@ -120,7 +121,7 @@ export default function Home() {
             </Link>
         </div>
       </section>
-    </div>
+      <PricingSection />    </div>
   );
 }
 

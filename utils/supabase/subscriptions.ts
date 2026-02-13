@@ -3,24 +3,50 @@ import { CreemCustomer, CreemSubscription } from "@/types/creem";
 
 export async function createOrUpdateCustomer(
   creemCustomer: CreemCustomer,
-  userId: string
+  userId?: string
 ) {
   const supabase = createServiceRoleClient();
 
-  const { data: existingCustomer, error: fetchError } = await supabase
-    .from("customers")
-    .select()
-    .eq("creem_customer_id", creemCustomer.id)
-    .single();
+  let existingCustomer = null;
 
-  if (fetchError && fetchError.code !== "PGRST116") {
-    throw fetchError;
+  // 1. Try finding by user_id if provided
+  // This handles the transition from 'auto_' ID to 'cust_' ID
+  if (userId) {
+    const { data, error } = await supabase
+      .from("customers")
+      .select()
+      .eq("user_id", userId)
+      .single();
+
+    if (!error) {
+      existingCustomer = data;
+    } else if (error.code !== "PGRST116") {
+      throw error;
+    }
+  }
+
+  // 2. If not found by user_id (or user_id missing), try finding by creem_customer_id
+  // This handles webhooks that might not have user_id metadata (e.g. renewals)
+  if (!existingCustomer) {
+    const { data, error } = await supabase
+      .from("customers")
+      .select()
+      .eq("creem_customer_id", creemCustomer.id)
+      .single();
+
+    if (!error) {
+      existingCustomer = data;
+    } else if (error.code !== "PGRST116") {
+      throw error;
+    }
   }
 
   if (existingCustomer) {
+    // If found, update the record
     const { error } = await supabase
       .from("customers")
       .update({
+        creem_customer_id: creemCustomer.id, // Ensure we have the latest Creem ID
         email: creemCustomer.email,
         name: creemCustomer.name,
         country: creemCustomer.country,
@@ -32,6 +58,12 @@ export async function createOrUpdateCustomer(
     return existingCustomer.id;
   }
 
+  // 3. If still not found, we need a user_id to create a new record
+  if (!userId) {
+    throw new Error("Cannot create customer: user_id is missing from webhook metadata");
+  }
+
+  // Insert new customer
   const { data: newCustomer, error } = await supabase
     .from("customers")
     .insert({
