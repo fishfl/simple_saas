@@ -15,6 +15,13 @@ export async function POST(request: Request) {
       return new NextResponse('Unauthorized', { status: 401 });
     }
 
+
+    console.log('Creating checkout for user:', user.email, 'Product ID:', productId);
+    console.log('Product Type:', productType, 'Credits:', credits);
+    console.log('process.env.CREEM_API_KEY', process.env.CREEM_API_KEY);
+    console.log('process.env.NODE_ENV', process.env.NODE_ENV);
+    console.log('process.env.CREEM_SUCCESS_URL', process.env.CREEM_SUCCESS_URL);
+
     // Create checkout session using SDK
     const checkout = await creem.checkouts.create({
       productId: productId,

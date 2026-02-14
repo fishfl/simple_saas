@@ -87,6 +87,7 @@ npm i
    - 复制SQL代码到Supabase SQL编辑器
    - 执行SQL创建表结构
 
+7 配置URL Configuration
 
 ### 步骤 4: 设置 Creem.io
 
