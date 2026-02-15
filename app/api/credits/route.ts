@@ -32,9 +32,6 @@ export async function GET() {
       .single();
 
     if (error) {
-      // 如果是 PGRST116 (无数据)，说明触发器未触发或为历史数据
-      // 在生产环境中，这可能需要记录日志或联系管理员
-      // 但在此处，我们只需处理错误即可，因为 DB 触发器应该保证数据存在
       console.error('Error fetching customer data:', error);
       return NextResponse.json(
         { error: 'Failed to fetch customer data' },

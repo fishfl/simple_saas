@@ -10,7 +10,7 @@ const nextConfig: NextConfig = {
   webpack: (config: any) => {
     config.watchOptions = {
       ...config.watchOptions,
-      ignored: ['**/Chinesename.club/**', '**/node_modules/**'],
+      ignored: ['**/node_modules/**'],
     };
     return config;
   },
