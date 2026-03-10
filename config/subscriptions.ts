@@ -58,7 +58,7 @@ export const CREDITS_TIERS: ProductTier[] = [
   {
     name: "Basic Package",
     id: "tier-3-credits",
-    productId: "prod_3oFb2iGX6JQwg6hCKeSkxE", // $9 one-time purchase
+    productId: "prod_a197uVwjTQahlPWGGsqNj", // $9 one-time purchase
     priceMonthly: "$9",
     description: "3 credits for testing and small-scale projects.",
     creditAmount: 3,
@@ -74,7 +74,7 @@ export const CREDITS_TIERS: ProductTier[] = [
   {
     name: "Standard Package",
     id: "tier-6-credits",
-    productId: "prod_3oFb2iGX6JQwg6hCKeSkxE", // $13 one-time purchase
+    productId: "prod_a197uVwjTQahlPWGGsqNj", // $13 one-time purchase
     priceMonthly: "$13",
     description: "6 credits for medium-sized applications.",
     creditAmount: 6,
@@ -90,7 +90,7 @@ export const CREDITS_TIERS: ProductTier[] = [
   {
     name: "Premium Package",
     id: "tier-9-credits",
-    productId: "prod_3oFb2iGX6JQwg6hCKeSkxE", // $29 one-time purchase
+    productId: "prod_a197uVwjTQahlPWGGsqNj", // $29 one-time purchase
     priceMonthly: "$29",
     description: "9 credits for larger applications and production use.",
     creditAmount: 9,
