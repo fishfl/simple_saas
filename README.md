@@ -14,7 +14,7 @@
 基于 Next.js、Supabase 和 Creem.io 生产就绪的启动套件
 快速构建具有身份验证、订阅和积分系统的 SaaS 应用程序。
 
-
+中国版参见，支持微信支付【https://github.com/fishfl/simple_saas_cn】
 
 ## 核心特色功能
 
